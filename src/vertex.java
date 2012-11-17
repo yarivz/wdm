@@ -11,14 +11,14 @@ public class vertex {
 	double newPR;
 	boolean stop;
 	
-	public vertex(String name)
+	public vertex(String name,double PR)
 	{
 		this.name = name;
 		incomingEdges = new Vector<edge>();
 		outgoingEdges = new Vector<edge>();
 		alive = false;
-		oldPR = 1;
-		newPR = 1;
+		oldPR = PR;
+		newPR = PR;
 		stop = false;
 	}
 	
