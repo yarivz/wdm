@@ -88,7 +88,7 @@ public class graph {
 		}
 	}
 
-	public void graphGenerator(String[] args, double initPR) throws FileNotFoundException
+	public void generateGraph(String[] args, double initPR) throws FileNotFoundException
 	{
 		boolean flag1,flag2;
 		

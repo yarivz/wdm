@@ -15,7 +15,7 @@ public class mainClass{
 		
 		double startTime = System.currentTimeMillis();
 		graph g = new graph();
-		g.graphGenerator(args,initPR);  	// Creates the graph
+		g.generateGraph(args,initPR);  	// Creates the graph
 		g.clean(); 							// Cleans the graph from dead links
 		g.print();							// Prints the graph
 		
