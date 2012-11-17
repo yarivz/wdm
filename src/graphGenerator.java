@@ -5,12 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
  
-
-
-
-public class graphGenerator{	
+public class graphGenerator{
 	
-	public static void main(String[] args) throws FileNotFoundException
+	public  void generateGraph(String[] args) throws FileNotFoundException
 	{ 
 		boolean flag1,flag2;
 		graph g = new graph();
