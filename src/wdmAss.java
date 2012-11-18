@@ -88,16 +88,6 @@ public class wdmAss {
 			TA ta = new TA(tf,g,words,files,flag);
 			ta.run();
 
-
-
-
-
-
-
-
-
-
-
 		}
 		else if(option.equals("-help")){
 			System.out.println("Options:\n-graph\tCreate a graph from the given files\n");

@@ -51,8 +51,7 @@ public class TA {
 			//add your thing here
 			wwfVec.add(wwf);
 		}
-		
-		
+
 		//ta algo
 		double trash;
 		for(int i=0;i<3;i++)

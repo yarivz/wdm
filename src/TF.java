@@ -70,8 +70,8 @@ public class TF {
 	public double getTF(String doc,String word){
 		word = word.toLowerCase();     //normalize word to lowercase
 		HashMap<String, Double> tf = docstf.get(doc);
-		if(tfValues.containsKey(word)){
-			return tfValues.get(word);
+		if(tf.containsKey(word)){
+			return tf.get(word);
 		}else{
 			return 0;
 		}

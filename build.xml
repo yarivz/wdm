@@ -12,7 +12,7 @@
     <target name="jar">
         <jar destfile="run.jar" basedir="build/classes">
             <manifest>
-                <attribute name="Main-Class" value="mainClass"/>
+                <attribute name="Main-Class" value="wdmAss"/>
             </manifest>
         </jar>
     </target>
