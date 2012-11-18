@@ -18,7 +18,7 @@ public class wdmAss {
 		double initPR = 1;					// Initial PageRank value
 		double epsilon = 0.01;				// The value for which we will stop trying to update a vertex's pageRank
 		double damping = 0.3;				// Damping Factor
-        double startTime = System.currentTimeMillis();
+        
 
 		String option = args[0];
 
@@ -33,6 +33,7 @@ public class wdmAss {
 		else if(option.equals("-pr")){
 			String[] files = Arrays.copyOfRange(args,1,args.length-1);
 			graph g = new graph();
+			double startTime = System.currentTimeMillis();
 			g.generateGraph(files,initPR);  	// Creates the graph
 			g.clean(); 							// Cleans the graph from dead links
 			g.calcPr(epsilon,damping);			// Calculates PageRank for each vertex
@@ -54,7 +55,7 @@ public class wdmAss {
 			String[] doc = new String[1];
 			doc[0] = args[1];
 			tf.calculateTF(doc);
-			System.out.println(tf.getTF(doc[0],args[2]));
+			System.out.println("TF: "+tf.getTF(doc[0],args[2]));
 			return;
 		}
 		else if(option.equals("-ta")){
@@ -82,6 +83,10 @@ public class wdmAss {
 			g.calcPr(epsilon,damping);			// Calculates PageRank for each vertex
 			TF tf = new TF();
 			tf.calculateTF(files);
+			
+			int flag = Math.max(FLAG_OR, FLAG_AND);
+			TA ta = new TA(tf,g,words,files,flag);
+			ta.run();
 
 
 
