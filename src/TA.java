@@ -38,10 +38,10 @@ public class TA {
 			wordWebTf wwf = new wordWebTf(words.get(i));
 			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet())
 			{
-				HashMap<String,Double> tf = entry.getValue();
+				HashMap<String,Double> tfMap = entry.getValue();
 				String website = entry.getKey();
-				double tfScoreOfWord = tf.get(words.elementAt(i));
-				
+				Double tfScoreOfWord = tfMap.get(words.elementAt(i));
+				if (tfScoreOfWord == null) tfScoreOfWord = 0.0;
 				webTf wt = new webTf(website,tfScoreOfWord);
 				wwf.wtVec.add(wt);
 			}
