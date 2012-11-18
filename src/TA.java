@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -29,19 +30,34 @@ public class TA {
 	
 	public void run()
 	{
-		Vector<Object> table = new Vector<Object>();
+		Comparator<webTf> comparator = Collections.reverseOrder();
+		Vector<wordWebTf> wwfVec = new Vector<wordWebTf>();
 		// build the table
 		for(int i=0;i<words.size();i++)
 		{
-			//add your thing here
-			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet()){
+			wordWebTf wwf = new wordWebTf(words.get(i));
+			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet())
+			{
 				HashMap<String,Double> tf = entry.getValue();
 				String website = entry.getKey();
 				double tfScoreOfWord = tf.get(words.elementAt(i));
-				//here you can put the website and tfScoreOfWord values into an object
+				
+				webTf wt = new webTf(website,tfScoreOfWord);
+				wwf.wtVec.add(wt);
 			}
-
-			//table.add();
+			
+			//sort
+			Collections.sort(wwf.wtVec,comparator);
+			//add your thing here
+			wwfVec.add(wwf);
+		}
+		
+		
+		//ta algo
+		double trash;
+		for(int i=0;i<3;i++)
+		{
+			
 		}
 	}
 }
