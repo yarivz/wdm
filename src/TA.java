@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -26,12 +29,19 @@ public class TA {
 	
 	public void run()
 	{
-		Vector<Vector<String>> table = new Vector<Vector<String>>();
+		Vector<Object> table = new Vector<Object>();
 		// build the table
 		for(int i=0;i<words.size();i++)
 		{
 			//add your thing here
-			table.add();
+			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet()){
+				HashMap<String,Double> tf = entry.getValue();
+				String website = entry.getKey();
+				double tfScoreOfWord = tf.get(words.elementAt(i));
+				//here you can put the website and tfScoreOfWord values into an object
+			}
+
+			//table.add();
 		}
 	}
 }
