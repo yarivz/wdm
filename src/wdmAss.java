@@ -14,7 +14,7 @@ public class wdmAss {
 
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		int FLAG_OR = 0, FLAG_AND = 0;
+		int flag=0;							// flag=0 is OR. flag=1 is AND
 		double initPR = 1;					// Initial PageRank value
 		double epsilon = 0.01;				// The value for which we will stop trying to update a vertex's pageRank
 		double damping = 0.3;				// Damping Factor
@@ -65,10 +65,10 @@ public class wdmAss {
 				words.add(args[1].substring(1).toLowerCase());
 				for(k=2;!args[k].contains(")");k++){
 					if(args[k].equals("OR")){
-						FLAG_OR = 1;
+						flag = 0;
 					}
 					else if(args[k].equals("AND")){
-						FLAG_AND = 1;
+						flag = 1;
 					}
 					else{
 						words.add(args[k].toLowerCase());
@@ -83,10 +83,9 @@ public class wdmAss {
 			g.calcPr(epsilon,damping);			// Calculates PageRank for each vertex
 			TF tf = new TF();
 			tf.calculateTF(files);
-			
-			int flag = Math.max(FLAG_OR, FLAG_AND);
 			TA ta = new TA(tf,g,words,files,flag);
 			ta.run();
+			
 
 		}
 		else if(option.equals("-help")){

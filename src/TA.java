@@ -30,7 +30,7 @@ public class TA {
 	
 	public void run()
 	{
-		Comparator<webTf> comparator = Collections.reverseOrder();
+		Comparator<stringScore> comparator = Collections.reverseOrder();
 		Vector<wordWebTf> wwfVec = new Vector<wordWebTf>();
 		// build the table
 		for(int i=0;i<words.size();i++)
@@ -42,7 +42,7 @@ public class TA {
 				String website = entry.getKey();
 				Double tfScoreOfWord = tfMap.get(words.elementAt(i));
 				if (tfScoreOfWord == null) tfScoreOfWord = 0.0;
-				webTf wt = new webTf(website,tfScoreOfWord);
+				stringScore wt = new stringScore(website,tfScoreOfWord);
 				wwf.wtVec.add(wt);
 			}
 			
@@ -51,12 +51,69 @@ public class TA {
 			//add your thing here
 			wwfVec.add(wwf);
 		}
-
+		
+		
 		//ta algo
-		double trash;
-		for(int i=0;i<3;i++)
+	
+		Vector<stringScore> resultVec = new Vector<stringScore>();
+		double threshold;
+		int index = 0;
+		
+		boolean over = false;
+		while(!over)
 		{
+			threshold=0;
+			for(int j=0;j<wwfVec.size();j++)
+			{
+				double result=0;
+				String website = new String();
+				double tf = 0;
 			
+				website = wwfVec.get(j).wtVec.get(index).name;
+				tf = wwfVec.get(j).wtVec.get(index).score;
+				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(website)).newPR;;
+				stringScore ssTemp = new stringScore(website,tf);
+				if(resultVec.contains(ssTemp))
+					continue;
+				
+				for(int k=0;k<wwfVec.size();k++)
+				{
+					result = tf;
+					if(k!=j)
+					{
+						if(flag==1)
+							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(website)).score;
+						else
+							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(website)).score);
+					}
+				}
+				ssTemp.score = result * g.vertexVec.get(g.vertexVec.indexOf(website)).newPR;
+				
+				if(resultVec.size()<3)
+				{
+					resultVec.add(ssTemp);
+					Collections.sort(resultVec);
+				}
+				else
+				{
+					if(ssTemp.score>resultVec.elementAt(0).score)
+					{
+						resultVec.setElementAt(ssTemp,0);
+						Collections.sort(resultVec);
+					}
+				}
+			}
+			index++;
+			threshold = threshold/wwfVec.size();
+			if(resultVec.size()>=3 && resultVec.elementAt(0).score>=threshold)
+				over=true;
+		}
+		
+		//print
+		System.out.println("TA scores:");
+		for(int i=resultVec.size()-1,k=0;k<3;i--,k++)
+		{
+			System.out.println(""+(i+1)+") "+resultVec.elementAt(i).name+" "+resultVec.elementAt(i).score);
 		}
 	}
 }
