@@ -71,7 +71,8 @@ public class TA {
 			
 				website = wwfVec.get(j).wtVec.get(index).name;
 				tf = wwfVec.get(j).wtVec.get(index).score;
-				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(website)).newPR;;
+				vertex v = new vertex(website,1);
+				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;;
 				stringScore ssTemp = new stringScore(website,tf);
 				if(resultVec.contains(ssTemp))
 					continue;
@@ -81,13 +82,14 @@ public class TA {
 					result = tf;
 					if(k!=j)
 					{
+						stringScore ss = new stringScore(website,0);
 						if(flag==1)
-							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(website)).score;
+							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score;
 						else
-							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(website)).score);
+							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score);
 					}
 				}
-				ssTemp.score = result * g.vertexVec.get(g.vertexVec.indexOf(website)).newPR;
+				ssTemp.score = result * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;
 				
 				if(resultVec.size()<3)
 				{
@@ -113,7 +115,7 @@ public class TA {
 		System.out.println("TA scores:");
 		for(int i=resultVec.size()-1,k=0;k<3;i--,k++)
 		{
-			System.out.println(""+(i+1)+") "+resultVec.elementAt(i).name+" "+resultVec.elementAt(i).score);
+			System.out.println(""+(k+1)+") "+resultVec.elementAt(i).name+" "+resultVec.elementAt(i).score);
 		}
 	}
 }
