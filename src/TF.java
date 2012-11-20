@@ -52,6 +52,9 @@ public class TF {
 						}
 
 					}
+					for(Map.Entry<String,Double> entry : tfValues.entrySet()){
+						entry.setValue(entry.getValue()/wordCount);
+					}
 					docstf.put(docs[j],tfValues);
 					//Close the input stream
 					in.close();

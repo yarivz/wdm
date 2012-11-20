@@ -53,7 +53,7 @@ public class TA {
 		}
 		
 		
-		//ta algo
+		//TA algo
 	
 		Vector<stringScore> resultVec = new Vector<stringScore>();
 		double threshold;
@@ -66,7 +66,7 @@ public class TA {
 			for(int j=0;j<wwfVec.size();j++)
 			{
 				double result=0;
-				String website = new String();
+				String website;
 				double tf = 0;
 			
 				website = wwfVec.get(j).wtVec.get(index).name;

@@ -211,4 +211,16 @@ public class graph {
 			System.out.println();
 		}
 	}
+
+	public void genCleanCalc(String[] args, double initPR,double epsilon,double damping) throws FileNotFoundException{
+		generateGraph(args,initPR);
+		clean();
+		calcPr(epsilon,damping);
+	}
+
+	public void genCleanPrint(String[] args, double initPR) throws FileNotFoundException{
+		generateGraph(args,initPR);
+		clean();
+		print();
+	}
 }
