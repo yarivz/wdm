@@ -193,22 +193,26 @@ public class graph {
 		while(verItr.hasNext())
 		{
 			vertex v = verItr.next();
-			System.out.println("Vertex name: "+v.name);
+			System.out.println("VERTEX NAME: "+v.name);
+			System.out.println("------------\n");
 			Iterator<edge> edItr = v.incomingEdges.iterator();
-			System.out.println("Incoming edges:");
-			while(edItr.hasNext())
-			{
-				edge e = edItr.next();
-				System.out.println(e.vs.name+"->"+e.vt.name);
-			}
-			edItr = v.outgoingEdges.iterator();
-			System.out.println("Outgoing edges:");
+			System.out.println("INCOMING EDGES:");
+			System.out.println("---------------");
 			while(edItr.hasNext())
 			{
 				edge e = edItr.next();
 				System.out.println(e.vs.name+"->"+e.vt.name);
 			}
 			System.out.println();
+			edItr = v.outgoingEdges.iterator();
+			System.out.println("OUTGOING EDGES:");
+			System.out.println("---------------");
+			while(edItr.hasNext())
+			{
+				edge e = edItr.next();
+				System.out.println(e.vs.name+"->"+e.vt.name);
+			}
+			System.out.println("\n--------------------------------------------------");
 		}
 	}
 

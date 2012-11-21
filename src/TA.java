@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -112,10 +113,10 @@ public class TA {
 		}
 		
 		//print
-		System.out.println("TA scores:");
+        System.out.println("TA scores:");
 		for(int i=resultVec.size()-1,k=0;k<3;i--,k++)
 		{
-			System.out.println(""+(k+1)+") "+resultVec.elementAt(i).name+" "+resultVec.elementAt(i).score);
+			System.out.println(""+(k+1)+") "+resultVec.elementAt(i).name+" "+wdmAss.df.format(resultVec.elementAt(i).score));
 		}
 	}
 }

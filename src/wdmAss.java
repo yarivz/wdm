@@ -1,6 +1,5 @@
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
@@ -14,11 +13,12 @@ import java.util.Vector;
  */
 public class wdmAss {
 
-	static int _flag=0;									// flag=0 is OR. flag=1 is AND
+	static int _flag=0;							// flag=0 is OR. flag=1 is AND
 	static double _initPR = 1;					// Initial PageRank value
 	static double _epsilon = 0.01;				// The value for which we will stop trying to update a vertex's pageRank
 	static double _damping = 0.3;				// Damping Factor
 	static graph g = new graph();
+	static DecimalFormat df = new DecimalFormat("###.####################");
 
 	public static void main(String[] args) throws FileNotFoundException
 	{
@@ -53,7 +53,7 @@ public class wdmAss {
 			String[] doc = new String[1];
 			doc[0] = args[1];
 			tf.calculateTF(doc);
-			System.out.println("TF: "+tf.getTF(doc[0],args[2]));
+			System.out.println("TF: "+df.format(tf.getTF(doc[0],args[2])));
 			return;
 		}
 		else if(option.equals("-ta")){
@@ -74,13 +74,16 @@ public class wdmAss {
 				}
 				words.add(args[k].substring(0,args[k].indexOf(")")));   //add last word of the set
 			}
+			else{
+				System.out.println("Please provide words to search for in the format (word1 [OR / AND] word2)");
+				return;
+			}
 			String[] files = Arrays.copyOfRange(args,k+1,args.length);
 			g.genCleanCalc(files,_initPR,_epsilon,_damping);  	// Creates the graph
 			TF tf = new TF();
 			tf.calculateTF(files);
 			TA ta = new TA(tf,g,words,files,_flag);
 			ta.run();
-			
 
 		}
 		else if(option.equals("-help")){
