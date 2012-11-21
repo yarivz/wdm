@@ -35,12 +35,15 @@ public class TA {
 		// build the table
 		for(int i=0;i<words.size();i++)
 		{
-			wordWebTf wwf = new wordWebTf(words.get(i));
+			String word = words.get(i).toLowerCase();   //change to lowercase to guarantee case insensitivity
+			wordWebTf wwf = new wordWebTf(word);
+			String website;
+			Double tfScoreOfWord;
 			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet())
 			{
 				HashMap<String,Double> tfMap = entry.getValue();
-				String website = entry.getKey();
-				Double tfScoreOfWord = tfMap.get(words.elementAt(i));
+				website = entry.getKey();
+				tfScoreOfWord = tfMap.get(word);
 				if (tfScoreOfWord == null) tfScoreOfWord = 0.0;
 				stringScore wt = new stringScore(website,tfScoreOfWord);
 				wwf.wtVec.add(wt);
