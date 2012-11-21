@@ -45,7 +45,7 @@ public class wdmAss {
 			while(verItr.hasNext())
 			{
 				vertex v = verItr.next();
-				System.out.println(v.name +": "+ v.newPR);
+				System.out.println(v.name +": "+ df.format(v.newPR));
 			}
 		}
 		else if(option.equals("-tf")){
@@ -90,8 +90,8 @@ public class wdmAss {
 			System.out.println("Options:\n-graph\tCreate a graph from the given files\n");
 			System.out.println("-help\tDisplay command line options\n");
 			System.out.println("-pr\tCalculate PageRank values for a graph generated from files\n");
-			System.out.println("-tf DOCUMENT WORD\tCalculate TF value for a word in a given file\n");
-			System.out.println("-ta (WORDS)\tRun Threshold Algorithm for a given set of words & documents and display most relevant documents\n");
+			System.out.println("-tf document word\tCalculate TF value for a word in a given file\n");
+			System.out.println("-ta (word1 OR/AND word2)\tRun Threshold Algorithm for a given set of words & documents and display most relevant documents\n");
         }
 		else{
 			System.out.println("Usage: wmdAss.jar [options] file1 file2...");
