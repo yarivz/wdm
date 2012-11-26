@@ -5,13 +5,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: zury
- * Date: 11/16/12
- * Time: 6:35 PM
- * To change this template use File | Settings | File Templates.
- */
 public class TF {
 
 	private HashMap<String,Double> tfValues;

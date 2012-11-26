@@ -4,13 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-/**
- * Created with IntelliJ IDEA.
- * User: zury
- * Date: 11/18/12
- * Time: 12:36 AM
- * To change this template use File | Settings | File Templates.
- */
 public class TA {
 	
 	TF tf;

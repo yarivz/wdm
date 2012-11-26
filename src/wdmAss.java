@@ -4,13 +4,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
 
-/**
- * Created with IntelliJ IDEA.
- * User: zury
- * Date: 11/17/12
- * Time: 4:27 PM
- * To change this template use File | Settings | File Templates.
- */
 public class wdmAss {
 
 	static int _flag=0;							// flag=0 is OR. flag=1 is AND
