@@ -31,8 +31,7 @@ public class wdmAss {
 			double estimatedTime = System.currentTimeMillis() - startTime;
 			System.out.println("Execution time: " + estimatedTime);
 			System.out.println();
-
-			//print
+            //print  PageRanks
 			System.out.println("PageRanks:");
 			Iterator<vertex> verItr = g.vertexVec.iterator();
 			while(verItr.hasNext())

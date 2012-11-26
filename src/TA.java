@@ -24,7 +24,7 @@ public class TA {
 	public void run()
 	{
 		Comparator<stringScore> comparator = Collections.reverseOrder();
-		Vector<wordWebTf> wwfVec = new Vector<wordWebTf>();
+		Vector<wordWebTf> wwfVec = new Vector<wordWebTf>();   //Vector that contains objects representing words with a list of their TF values in each of the documents
 		// build the table
 		for(int i=0;i<words.size();i++)
 		{
@@ -44,44 +44,44 @@ public class TA {
 			
 			//sort
 			Collections.sort(wwf.wtVec,comparator);
-			//add your thing here
 			wwfVec.add(wwf);
 		}
 		
 		
 		//TA algo
-	
-		Vector<stringScore> resultVec = new Vector<stringScore>();
-		double threshold;
+	  	Vector<stringScore> resultVec = new Vector<stringScore>();
+		double threshold = 0;
 		int index = 0;
-		
+		String website;
+		double result;
+		double tf;
+
 		boolean over = false;
 		while(!over)
 		{
-			threshold=0;
 			for(int j=0;j<wwfVec.size();j++)
 			{
-				double result=0;
-				String website;
-				double tf = 0;
-			
+				result=0;
+				tf = 0;
+
 				website = wwfVec.get(j).wtVec.get(index).name;
 				tf = wwfVec.get(j).wtVec.get(index).score;
 				vertex v = new vertex(website,1);
-				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;;
+				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;
 				stringScore ssTemp = new stringScore(website,tf);
 				if(resultVec.contains(ssTemp))
-					continue;
-				
+				{
+					continue;         //skip over websites already added to the result list
+				}
+				result = tf;
 				for(int k=0;k<wwfVec.size();k++)
 				{
-					result = tf;
 					if(k!=j)
 					{
 						stringScore ss = new stringScore(website,0);
-						if(flag==1)
+						if(flag==1)   //the AND operator was given
 							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score;
-						else
+						else         //the OR operator was given
 							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score);
 					}
 				}
