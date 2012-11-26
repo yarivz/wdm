@@ -15,11 +15,8 @@ public class wdmAss {
 
 	public static void main(String[] args) throws FileNotFoundException
 	{
-
-
 		String option = args[0];
-
-		if(option.equals("-graph")){
+        if(option.equals("-graph")){
 			String[] files = Arrays.copyOfRange(args,1,args.length);
 			g.genCleanPrint(files,_initPR);  	// Creates the graph
 			return;

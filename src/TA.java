@@ -17,6 +17,7 @@ public class TA {
 		this.tf = tf;
 		this.g = g;
 		this.words = words;
+		Collections.sort(words);
 		this.files = files;
 		this.flag = flag;
 	}
@@ -74,16 +75,19 @@ public class TA {
 					continue;         //skip over websites already added to the result list
 				}
 				result = tf;
+				stringScore ss = new stringScore(website,0);
 				for(int k=0;k<wwfVec.size();k++)
 				{
 					if(k!=j)
 					{
-						stringScore ss = new stringScore(website,0);
 						if(flag==1)   //the AND operator was given
 							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score;
 						else         //the OR operator was given
 							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score);
 					}
+				}
+				if(flag==1){
+					result = result/wwfVec.size();
 				}
 				ssTemp.score = result * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;
 				
