@@ -55,7 +55,7 @@ public class TA {
 		int index = 0;
 		String website;
 		double result;
-		double tf;
+		double tfs; //tf score
 
 		boolean over = false;
 		while(!over)
@@ -63,18 +63,17 @@ public class TA {
 			for(int j=0;j<wwfVec.size();j++)
 			{
 				result=0;
-				tf = 0;
-
 				website = wwfVec.get(j).wtVec.get(index).name;
-				tf = wwfVec.get(j).wtVec.get(index).score;
+				tfs = wwfVec.get(j).wtVec.get(index).score; //get the tf score for word "j" in website "index"
 				vertex v = new vertex(website,1);
-				threshold += tf * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;
-				stringScore ssTemp = new stringScore(website,tf);
+				double PR = g.vertexVec.get(g.vertexVec.indexOf(v)).newPR * wdmAss.balancePR; //get the website's PR and balance it
+				threshold += tfs * PR;
+				stringScore ssTemp = new stringScore(website,tfs);
 				if(resultVec.contains(ssTemp))
 				{
 					continue;         //skip over websites already added to the result list
 				}
-				result = tf;
+				result = tfs;
 				stringScore ss = new stringScore(website,0);
 				for(int k=0;k<wwfVec.size();k++)
 				{
@@ -89,7 +88,7 @@ public class TA {
 				if(flag==1){
 					result = result/wwfVec.size();
 				}
-				ssTemp.score = result * g.vertexVec.get(g.vertexVec.indexOf(v)).newPR;
+				ssTemp.score = result * PR;
 				
 				if(resultVec.size()<3)
 				{

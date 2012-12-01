@@ -11,6 +11,7 @@ public class wdmAss {
 	static double _epsilon = 0.01;				// The value for which we will stop trying to update a vertex's pageRank
 	static double _damping = 0.3;				// Damping Factor
 	static graph g = new graph();
+	static double balancePR = 0.00001;
 	static DecimalFormat df = new DecimalFormat("###.####################");
 
 	public static void main(String[] args) throws FileNotFoundException
@@ -46,11 +47,18 @@ public class wdmAss {
 			return;
 		}
 		else if(option.equals("-ta")){
+			boolean oneWord = false;
 			Vector<String> words = new Vector<String>();
-			int k=0;
-			if(args[1].contains("(")){             //parse the word set and determine the boolean operator
-				words.add(args[1].substring(1).toLowerCase());
-				for(k=2;!args[k].contains(")");k++){
+			int k=1;
+			if(args.length > 1 && args[1].contains("(")){			//parse the word set and determine the boolean operator
+				if(args[k].contains(")")){
+					words.add(args[1].substring(1,args[1].indexOf(")")).toLowerCase());
+					oneWord = true;
+				}
+				else{
+					words.add(args[1].substring(1).toLowerCase());
+				}
+				for(k=2;!oneWord && !args[k].contains(")");k++){
 					if(args[k].equals("OR")){
 						_flag = 0;
 					}
@@ -61,13 +69,15 @@ public class wdmAss {
 						words.add(args[k].toLowerCase());
 					}
 				}
-				words.add(args[k].substring(0,args[k].indexOf(")")));   //add last word of the set
+				if(!oneWord){
+					words.add(args[k].substring(0,args[k].indexOf(")")));   //add last word of the set
+				}
 			}
 			else{
 				System.out.println("Please provide words to search for in the format (word1 [OR / AND] word2)");
 				return;
 			}
-			String[] files = Arrays.copyOfRange(args,k+1,args.length);
+			String[] files = Arrays.copyOfRange(args,k,args.length);
 			g.genCleanCalc(files,_initPR,_epsilon,_damping);  	// Creates the graph
 			TF tf = new TF();
 			tf.calculateTF(files);
