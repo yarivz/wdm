@@ -39,9 +39,6 @@ public class TA {
 				if (tfScoreOfWord == null) tfScoreOfWord = 0.0;
 				vertex v = new vertex(website,1);
 				double PR = g.vertexVec.get(g.vertexVec.indexOf(v)).newPR * wdmAss.balancePR; //get the website's PR and balance it
-				System.out.println("PR: "+PR);
-				System.out.println("TF: "+tfScoreOfWord);
-
 				tfScoreOfWord = tfScoreOfWord * PR; //augment score to reflect website's PR as well as the tf
 				stringScore wt = new stringScore(website,tfScoreOfWord);
 				wwf.wtVec.add(wt); //add the website name and the word's score in it to the word's list of scores

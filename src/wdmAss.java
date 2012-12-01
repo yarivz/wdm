@@ -11,7 +11,7 @@ public class wdmAss {
 	static double _epsilon = 0.01;				// The value for which we will stop trying to update a vertex's pageRank
 	static double _damping = 0.3;				// Damping Factor
 	static graph g = new graph();				// graph of websites
-	static double balancePR = 0.1;				// a factor designed to balance the weight of PR in the relevance scores
+	static double balancePR = 0.01;				// a factor designed to balance the weight of PR in the relevance scores
 	static DecimalFormat df = new DecimalFormat("###.#########################"); //formatter for results
 
 	public static void main(String[] args) throws FileNotFoundException

@@ -9,7 +9,7 @@ public class TF {
 
 	private HashMap<String,Double> tfValues;
 	private HashMap<String,HashMap<String, Double>> docstf;
-	int wordCount = 0;
+	int wordCount = 0; //total word number in each document
 
 	//constructor for TF class
 	public TF(){
@@ -29,6 +29,7 @@ public class TF {
 					DataInputStream in = new DataInputStream(fstream);
 					BufferedReader br = new BufferedReader(new InputStreamReader(in));
 					String strLine;
+					wordCount = 0;
 					tfValues = new HashMap<String, Double>();   //initialize a new HashMap for the document tf values
 					//Read File Line By Line
 					while ((strLine = br.readLine()) != null)
@@ -48,6 +49,7 @@ public class TF {
 						}
 
 					}
+					//iterate over HashMap and replace each word's count with its TF value
 					for(Map.Entry<String,Double> entry : tfValues.entrySet()){
 						entry.setValue(entry.getValue()/wordCount);
 					}
@@ -58,10 +60,6 @@ public class TF {
 					System.err.println("Error: " + e.getMessage());
 				}
 			}
-		//iterate over HashMap and replace each word's count with its TF value
-		for(Map.Entry<String,Double> entry : tfValues.entrySet()){
-			entry.setValue(entry.getValue()/wordCount);
-		}
 	}
 
 	public double getTF(String doc,String word){
