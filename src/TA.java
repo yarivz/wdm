@@ -6,19 +6,17 @@ import java.util.Vector;
 
 public class TA {
 	
-	TF tf;
-	graph g;
-	Vector<String> words;
-	String[] files;
-	int flag;
+	TF tf; //data structure containing all tf scores for all words according to websites
+	graph g; //graph created from websites
+	Vector<String> words; //specified words to determine relevance
+	int flag; //indicates the type of the operand - '0' for OR, '1' for AND
 	
-	public TA(TF tf, graph g, Vector<String> words, String[] files, int flag)
+	public TA(TF tf, graph g, Vector<String> words,int flag)
 	{
 		this.tf = tf;
 		this.g = g;
 		this.words = words;
 		Collections.sort(words);
-		this.files = files;
 		this.flag = flag;
 	}
 	
@@ -33,14 +31,20 @@ public class TA {
 			wordWebTf wwf = new wordWebTf(word);
 			String website;
 			Double tfScoreOfWord;
-			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet())
+			for(Map.Entry<String,HashMap<String,Double>> entry : tf.getDocstf().entrySet()) //iterate over tf scores for each website
 			{
 				HashMap<String,Double> tfMap = entry.getValue();
 				website = entry.getKey();
-				tfScoreOfWord = tfMap.get(word);
+				tfScoreOfWord = tfMap.get(word); //get tf score of word in this website
 				if (tfScoreOfWord == null) tfScoreOfWord = 0.0;
+				vertex v = new vertex(website,1);
+				double PR = g.vertexVec.get(g.vertexVec.indexOf(v)).newPR * wdmAss.balancePR; //get the website's PR and balance it
+				System.out.println("PR: "+PR);
+				System.out.println("TF: "+tfScoreOfWord);
+
+				tfScoreOfWord = tfScoreOfWord * PR; //augment score to reflect website's PR as well as the tf
 				stringScore wt = new stringScore(website,tfScoreOfWord);
-				wwf.wtVec.add(wt);
+				wwf.wtVec.add(wt); //add the website name and the word's score in it to the word's list of scores
 			}
 			
 			//sort
@@ -55,58 +59,56 @@ public class TA {
 		int index = 0;
 		String website;
 		double result;
-		double tfs; //tf score
+		double score; //calculated tf score * PR
 
 		boolean over = false;
-		while(!over)
+		while(!over && index < wwfVec.get(0).wtVec.size()) //as long as we have not found our top 3 websites
 		{
 			for(int j=0;j<wwfVec.size();j++)
 			{
 				result=0;
 				website = wwfVec.get(j).wtVec.get(index).name;
-				tfs = wwfVec.get(j).wtVec.get(index).score; //get the tf score for word "j" in website "index"
-				vertex v = new vertex(website,1);
-				double PR = g.vertexVec.get(g.vertexVec.indexOf(v)).newPR * wdmAss.balancePR; //get the website's PR and balance it
-				threshold += tfs * PR;
-				stringScore ssTemp = new stringScore(website,tfs);
+				score = wwfVec.get(j).wtVec.get(index).score; //get the tf*PR score for word "j" in website "index"
+				threshold += score; //accumulate the scores along the words and afterwards devide by words amount for average
+				stringScore ssTemp = new stringScore(website,score);
 				if(resultVec.contains(ssTemp))
 				{
 					continue;         //skip over websites already added to the result list
 				}
-				result = tfs;
-				stringScore ss = new stringScore(website,0);
+				result = score;
 				for(int k=0;k<wwfVec.size();k++)
 				{
 					if(k!=j)
 					{
+						double temp = wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ssTemp)).score;
 						if(flag==1)   //the AND operator was given
-							result += wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score;
+							result += temp;
 						else         //the OR operator was given
-							result = Math.max(result, wwfVec.get(k).wtVec.get(wwfVec.get(k).wtVec.indexOf(ss)).score);
+							result = Math.max(result, temp);
 					}
 				}
-				if(flag==1){
+				if(flag==1){ //if AND was specified, divide accumulated result by words amount to get average
 					result = result/wwfVec.size();
 				}
-				ssTemp.score = result * PR;
+				ssTemp.score = result;
 				
-				if(resultVec.size()<3)
+				if(resultVec.size()<3)//if we have not found 3 websites yet
 				{
 					resultVec.add(ssTemp);
 					Collections.sort(resultVec);
 				}
 				else
 				{
-					if(ssTemp.score>resultVec.elementAt(0).score)
+					if(ssTemp.score>resultVec.elementAt(0).score) //if the new result is higher than the last of the top k, add it
 					{
 						resultVec.setElementAt(ssTemp,0);
 						Collections.sort(resultVec);
 					}
 				}
 			}
-			index++;
-			threshold = threshold/wwfVec.size();
-			if(resultVec.size()>=3 && resultVec.elementAt(0).score>=threshold)
+			index++; //advance to next "row" of websites for each word
+			threshold = threshold/wwfVec.size(); //divide accumulated threshold by the amount of words to get average
+			if(resultVec.size()>=3 && resultVec.elementAt(0).score>=threshold) //top 3 results have been found
 				over=true;
 		}
 		
